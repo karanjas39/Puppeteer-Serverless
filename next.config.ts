@@ -1,7 +1,17 @@
-import type { NextConfig } from "next";
+// next.config.ts
+import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals = [
+        ...(config.externals || []),
+        "puppeteer-core",
+        "@sparticuz/chromium",
+      ];
+    }
+    return config;
+  },
 };
 
 export default nextConfig;
