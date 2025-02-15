@@ -13,9 +13,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { browser, page } = await createBrowser(url);
+    const browser = await createBrowser();
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: "networkidle2" });
     const screenshot = await page.screenshot({ encoding: "binary" });
-
     await browser.close();
 
     return new NextResponse(screenshot, {
