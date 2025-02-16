@@ -1,4 +1,4 @@
-import chromium from "@sparticuz/chromium";
+import chromium from "@sparticuz/chromium-min";
 import puppeteer from "puppeteer-core";
 
 export const maxDuration = 20;
@@ -13,7 +13,10 @@ export async function POST(request: Request) {
     args: isLocal ? puppeteer.defaultArgs() : chromium.args,
     defaultViewport: chromium.defaultViewport,
     executablePath:
-      process.env.CHROME_EXECUTABLE_PATH || (await chromium.executablePath()),
+      process.env.CHROME_EXECUTABLE_PATH ||
+      (await chromium.executablePath(
+        "https://your-cdn.com/path-to-chromium-pack.tar"
+      )),
     headless: true,
   });
 
